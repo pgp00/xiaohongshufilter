@@ -1,0 +1,13 @@
+// Filter notes containing "转租" in title or desc
+let body = $response.body;
+let obj = JSON.parse(body);
+
+if (obj.data && obj.data.notes) {
+  obj.data.notes = obj.data.notes.filter(note => {
+    const title = note.title || '';
+    const desc = note.desc || '';
+    return !title.includes('转租') && !desc.includes('转租');
+  });
+}
+
+$done({ body: JSON.stringify(obj) });
